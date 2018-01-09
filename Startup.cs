@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API_Users.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -39,6 +40,7 @@ namespace API_Users
                         return Task.CompletedTask;
                     };
             });
+            
             services.AddMvc();
             services.AddTransient<IDbConnection>(x => CreateDbContext());
             services.AddTransient<UserRepository>();
