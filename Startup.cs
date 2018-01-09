@@ -40,7 +40,20 @@ namespace API_Users
                         return Task.CompletedTask;
                     };
             });
-            
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsDevPolicy", builder =>
+                {
+                    builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+                });
+            });
+
+
             services.AddMvc();
             services.AddTransient<IDbConnection>(x => CreateDbContext());
             services.AddTransient<UserRepository>();
@@ -59,7 +72,12 @@ namespace API_Users
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors("CorsDevPolicy");
             }
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            
             app.UseAuthentication();
             app.UseMvc();
         }
