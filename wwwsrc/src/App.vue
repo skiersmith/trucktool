@@ -19,6 +19,9 @@
         console.log(this.$store.state.user)
         return this.$store.state.user
       },
+    },
+    mounted(){
+      this.$store.dispatch('authenticate')
     }
   }
 </script>
@@ -34,7 +37,7 @@
   }
 
   .nav-header {
-    background-color: rgb(103, 216, 160);
+    background-color: rgb(216, 103, 103);
     height: 6rem;
     width: 100vw;
     top: 0px;
@@ -44,7 +47,13 @@
     /* justify-content: space-around; */
   }
 
-
+  .RLwhite {
+    color: white;
+  }
+  .RLwhite:hover {
+    color: rgb(38, 151, 185);
+    text-decoration: none;
+  }
   .spacer10 {
     height: 10rem;
   }
@@ -69,7 +78,7 @@
   }
 
   .mainDiv {
-    background-color: bisque;
+    background-color: rgb(252, 243, 232);
     /* height: 20rem; */
     width: 30rem;
     margin: 1rem;

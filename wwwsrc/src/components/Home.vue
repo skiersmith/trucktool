@@ -29,15 +29,13 @@
             <div class="spacer10"></div>
 
          
-
+             
+        <h1 class="title">All Keeps:</h1>
                 <div class="keepCont">
                     <div class="row">
-                        <router-link :to="{name: 'keep', params: {keep: keep }}">
-                        </router-link>
-
-
                         <div v-for="keep in keeps">
                             <div class="col-xl-4 col-xs-6 mainDiv">
+                            <!-- @mouseover="keepButtonsShow(keep)" @mouseleave="keepButtonsHide(keep)" -->
                                 <!-- @click="setKeep(keep)" -->
                                 <div>
                                     <img class="keepImg" :src="keep.imgUrl" alt="keep image">
@@ -52,7 +50,11 @@
                                     <p>{{keep.views}}</p>
                                     <p>{{keep.keeps}}</p>
                                 </div>
-                                <div>
+                                
+                                <div id="keepButtons" class="">
+                                        <button @click="addToVaultToggle">Keep</button>
+                                </div>
+                                <div v-if="addToVaults">
                                         <form @change="addToVault(keep)">
                                             <p class="inline">Vault:</p>
                                             <select name="select vault" v-model="vaultkeep.vaultId">
@@ -60,7 +62,6 @@
                                             </select>
                                         </form>
                                 </div>
-                                
 
                             </div>
 
@@ -81,8 +82,9 @@
         data() {
             return {
                 keep: {},
-             
-                vaultkeep: {}
+                addToVaults: false,
+                vaultkeep: {},
+                // seen: false
             }
         },
         methods: {
@@ -96,7 +98,7 @@
                 this.keepForm = !this.keepForm
             },
             newKeep() {
-                debugger
+                
                 this.authenticate()
                 // this.keep.userID = this.$store.state.user.id
                 this.$store.dispatch('newKeep', this.keep)
@@ -116,7 +118,19 @@
                 this.vaultkeep.keepId = keep.id 
                 this.$store.dispatch('addToVault', this.vaultkeep)
                 this.vaultkeep.vaultId = ""
-            }
+            },
+            addToVaultToggle(){
+                
+                this.addToVaults = !this.addToVaults
+            },
+            // keepButtonsShow(keep){
+            //     // $(keep).find("keepButtons").removeClass("hidden")
+            //     keep.getElementById("keepButtons").removeClass("hidden")
+            // },
+            // keepButtonsHide(keep){
+            //     keep.getElementById("keepButtons").AddClass("hidden")
+            //     // $(keep).find("keepButtons").AddClass("hidden")
+            // }
 
         },
         computed: {
@@ -151,12 +165,17 @@
     }
 
     .keepCont {
-        background-color: blanchedalmond;
+        background-color: rgb(205, 215, 255);
+        width: 100vw
 
     }
 
     .bgColor {
         background-color: blanchedalmond;
         width: 40rem;
+    }
+    .title{
+        position: relative;
+        right: 80rem;
     }
 </style>

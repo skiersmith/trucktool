@@ -47,13 +47,18 @@ var store = new vuex.Store({
 
             state.activeKeep = data
         },
+        setMyKeeps(state, data) {
+            console.log("here")
+            console.log(data)
+            console.log("here")
+            state.myKeeps = data
+            
+        },
 
         handleError(state, err) {
             state.error = err
         },
-        setMyKeeps(state, data) {
-            state.myKeeps = date
-        },
+
         setActiveVaults(state, data) {
             console.log("AV")
             console.log(data)
@@ -68,6 +73,22 @@ var store = new vuex.Store({
 
     },
     actions: {
+        deleteVK({ commit, dispatch }, keep) {
+          
+                api.delete('vaultkeeps/'+'vaults/'+ keep.vaultId + '/keeps/'+ keep.id,)
+                    .then(res => {
+                        console.log("res")
+                        console.log(res.data)
+    
+                        dispatch('getUserVaults', res.data.userId)
+    
+                    })
+                    .catch(err => {
+                        commit('handleError', err)
+    
+                    })
+         },   
+
         addToVault({ commit, dispatch }, vault) {
         var v = {
             VaultId: vault.vaultId,
@@ -156,6 +177,22 @@ var store = new vuex.Store({
 
                 })
         },
+        getMyKeeps({ commit, dispatch }, userId) {
+            console.log(userId)
+            api('keeps/users/' + userId)
+            .then(res => {
+                console.log(res.data)
+                console.log("^^^^^")
+                    commit('setMyKeeps', res.data)
+
+
+                })
+                .catch(err => {
+                    commit('handleError', err)
+
+                })
+        },
+        
         deleteKeep({ commit, dispatch }, keep) {
             api.delete('keeps/' + keep.id)
                 .then(res => {
@@ -240,6 +277,24 @@ var store = new vuex.Store({
                         router.push({ name: "Register" })
                     } else {
                         commit('setUser', res.data)
+                        dispatch('getUserVaults', res.data.id)
+                    }
+                })
+                .catch(() => {
+                    router.push({ name: "Register" })
+                })
+        },
+        authenticate2({ commit, dispatch }) {
+            auth('accounts/authenticate')
+                .then(res => {
+                    console.log("authRes")
+                    console.log(res.data)
+                    if (!res.data) {
+                        router.push({ name: "Register" })
+                    } else {
+                        commit('setUser', res.data)
+                        dispatch('getUserVaults', res.data.id)
+                        dispatch('getMyKeeps', res.data.id)
                     }
                 })
                 .catch(() => {

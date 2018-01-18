@@ -1,53 +1,56 @@
 <template>
-<div>
-    <p>tooooooyooooo</p>
-
-    
-    <div class="mainVault"> 
-        <div v-for="keep in keeps">
-            <div class="mainDiv">
-                <div>
-                    <p>Description</p>
-                </div>
-                <div>
-                    <img src="http://via.placeholder.com/200x100" alt="">
-                </div>
-                <div>
-                    <p>Url</p>
-                    <p>
-                        {{keep.description}}
-                    </p>
-                </div>
-                <div class="keepStat-Container">
-                    <p>Keeps: 0</p>
-                    <p>Views: 0</p>
-                    <p>S: 0</p>
+    <div>
+        <router-link :to="{name: 'Account'}">
+                <button>Back to account</button>
+        </router-link>
+        <h1>{{vault.name}}</h1>
+        <div class="mainVault">
+            <div v-for="keep in keeps">
+                <div class="col-xl-4 col-xs-6 mainDiv">
+                    <!-- @click="setKeep(keep)" -->
+                   <button@click="deleteVK(keep)">x</button>
+                    <div>
+                        <img class="keepImg" :src="keep.imgUrl" alt="keep image">
+                    </div>
+                    <div>
+                        <!-- <p>{{keep.imgUrl}}</p> -->
+                        <p>
+                            {{keep.description}}
+                        </p>
+                    </div>
+                    <div class="keepStat-Container">
+                        <p>{{keep.views}}</p>
+                        <p>{{keep.keeps}}</p>
+                    </div>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
-</div>
-
 </template>
 <script>
     export default {
         name: 'Vault',
         data() {
             return {
+                vk: {},
                 active: false,
             }
         },
         props: ['vault'],
-        mounted(){
+        mounted() {
             console.log(this.vault.id)
             this.$store.dispatch('getKeepsAtVault', this.vault.id)
 
         },
         methods: {
-            getVaultKeep(){
+            getVaultKeep() {
                 console.log(this.vault.id)
                 this.$store.dispatch('getKeepsAtVault', this.vault.id)
-                
+
+            },
+            deleteVK(keep){
+                keep.vaultId = this.vault.id
+                this.$store.dispatch('deleteVK', keep)
             }
         },
         computed: {
@@ -57,7 +60,7 @@
             keeps() {
                 return this.$store.state.activeVaultKeep
             },
-            mouseOver(){
+            mouseOver() {
                 this.buttons = !this.buttons
             }
         },
@@ -68,5 +71,4 @@
         background-color: rgb(196, 231, 255);
 
     }
-
 </style>

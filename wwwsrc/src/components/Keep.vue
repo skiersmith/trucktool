@@ -49,7 +49,7 @@
                 this.keepForm = !this.keepForm
             },
             newKeep() {
-                debugger
+                
                 this.authenticate()
                 // this.keep.userID = this.$store.state.user.id
                 this.$store.dispatch('newKeep', this.keep)

@@ -25,6 +25,7 @@ namespace keepr.Controllers
         [HttpGet("users/{id}")]
         public IEnumerable<Keep> GetByUserId(int id)
         {
+            Console.WriteLine("yo" + id);
             return db.GetAllByUserId(id);
         }
 
@@ -32,7 +33,6 @@ namespace keepr.Controllers
         [HttpGet("{id}")]
         public Keep Get(int id)
         {
-            Console.WriteLine(id);
             return db.GetById(id);
         }
 
