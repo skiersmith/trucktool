@@ -1,10 +1,10 @@
 using System;
 using System.Data;
-using API_Users.Models;
+using keepr.Models;
 using Dapper;
 using MySql.Data.MySqlClient;
 
-namespace API_Users.Repositories
+namespace keepr.Repositories
 {
     public class UserRepository : DbContext
     {
@@ -14,6 +14,7 @@ namespace API_Users.Repositories
 
         public UserReturnModel Register(RegisterUserModel creds)
         {
+    
             // encrypt the password??
             creds.Password = BCrypt.Net.BCrypt.HashPassword(creds.Password);
             //sql
@@ -69,7 +70,12 @@ namespace API_Users.Repositories
             User savedUser = _db.QueryFirstOrDefault<User>(@"
             SELECT * FROM users WHERE id = @id
             ", new { id });
+           if(savedUser != null){
             return savedUser.GetReturnModel();
+           }
+           else{
+                return null;
+           }
         }
 
         internal UserReturnModel UpdateUser(UserReturnModel user)

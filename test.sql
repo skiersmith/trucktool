@@ -62,3 +62,22 @@
 
 -- DELETE from vaults WHERE id = 2;
 -- DELETE FROM users WHERE id = 1;
+
+
+-- ALTER TABLE keeps
+--    ADD COLUMN views int(20) DEFAULT 0 
+--         AFTER keeps
+
+-- ALTER TABLE keeps 
+-- CHANGE COLUMN views INT(20) SET DEFAULT 0
+--  AFTER description
+
+-- ALTER TABLE keeps
+-- ALTER views SET DEFAULT 0;
+
+
+
+-- ALTER TABLE keeps
+-- ALTER keeps SET DEFAULT 0;
+
+--  ALTER TABLE keeps DROP views;

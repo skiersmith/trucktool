@@ -2,20 +2,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using API_Users.Models;
-using API_Users.Repositories;
+using keepr.Models;
+using keepr.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API_Users.Controllers
+namespace keepr.Controllers
 {
     [Route("[controller]")]
-    public class AccountController : Controller
+    public class AccountsController : Controller
     {
         private readonly UserRepository _db;
 
-        public AccountController(UserRepository repo)
+        public AccountsController(UserRepository repo)
         {
             _db = repo;
         }
@@ -32,8 +32,16 @@ namespace API_Users.Controllers
                     await HttpContext.SignInAsync(principal);
                     return user;
                 }
+                else
+                {
+                    return null;
+
+                }
             }
-            return null;
+            else
+            {
+                return null;
+            }
         }
 
         [HttpPost("login")]
@@ -58,7 +66,16 @@ namespace API_Users.Controllers
             var id = user.Identity.Name;
             // var email = user.Claims.Where(c => c.Type == ClaimTypes.Email)
             //        .Select(c => c.Value).SingleOrDefault();
-            return _db.GetUserById(id);
+            var getUser = _db.GetUserById(id);
+           
+            if (getUser != null)
+            {
+                return getUser;
+            }
+            else{
+                return null;
+            }
+
         }
 
         [Authorize]
@@ -92,6 +109,24 @@ namespace API_Users.Controllers
                 }
             }
             return "How did you even get here?";
+        }
+        // [HttpPost("logout")]
+        // public void Logout([FromBody]LoginUserModel creds)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         UserReturnModel user = _db.Login(creds);
+        //         if (user != null)
+        //         {
+        //             HttpContext.Session.Clear();
+        //         }
+        //     }
+
+        // }
+        [HttpDelete("logout")]
+        public async void Logout()
+        {
+            await HttpContext.SignOutAsync();
         }
 
 

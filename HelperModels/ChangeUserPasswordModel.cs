@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace API_Users.Models
+namespace keepr.Models
 {
     public class ChangeUserPasswordModel
     {
@@ -11,5 +11,6 @@ namespace API_Users.Models
         public string OldPassword { get; set; }
         [Required, MinLength(4)]
         public string NewPassword { get; set; }
+
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace API_Users.Models
+namespace keepr.Models
 {
     public class User
     {

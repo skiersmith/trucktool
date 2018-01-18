@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace API_Users.Models
+namespace keepr.Models
 {
     public class RegisterUserModel
     {
@@ -10,5 +10,7 @@ namespace API_Users.Models
         public string Email { get; set; }
         [MinLength(4)]
         public string Password { get; set; }
+
+
     }
 }
