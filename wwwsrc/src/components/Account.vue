@@ -22,85 +22,54 @@
                 </div>
             </div>
         </div>
-        <div class="buttonDiv">
-            <button@click="toggleKeepForm" class="btn btn-info">New Keep</button>
-            <button@click="toggleVaultForm" class="btn btn-info">New Vault</button>
-        </div>
-        <div v-if="keepForm" class="bgColor">
-            <form @submit.prevent="newKeep">
-                <div class="form-group">
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="imgurl">Img Url:</label>
-                        <div class="col-sm-3 regInput">
-                            <input type="url" size="40" name="imgurl" v-model="keep.imgUrl" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="description">Description:</label>
-                        <div class="col-sm-3 regInput">
-                            <input type="text" size="40" name="description" placeholder="Description" v-model="keep.description" />
-                        </div>
-                    </div>
-                    <!-- <div class="form-group">
-                        <label class="col-sm-2 control-label" for="url">Url:</label>
-                        <div class="col-sm-3 regInput">
-                            <input type="url" size="40" name="url" placeholder="url" v-model="keep.url" />
-                        </div>
-                    </div> -->
-                    <div class="form-group">
-                        <button type="submit">Submit</button>
-                    </div>
-                </div>
-            </form>
-        </div>
         <div class="spacer10"></div>
-        <div class="brown">
-
+        <div class="userChange">
             <div>
-                <p>{{user.id}}</p>
+                <h3>Username</h3>
                 <p>{{user.username}}</p>
+                <h3>Email</h3>
                 <p>{{user.email}}</p>
             </div>
-            <button@click="toggleUpdate">Update</button>
-                <button@click="toggleUpdateB">UpdatePassword</button>
-                    <div v-if="updateA">
-                        <form @submit.prevent="updateUser">
-                            <div class="form-group">
-                                <br>
-                                <div class="form-group">
-                                    <button type="submit" class="btn-xs btn-success">Save</button>
-                                </div>
-                                <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input class="inline" size="15" type="text" name="name" placeholder="name" v-model="user.username">
-                                </div>
-                                <div class="form-group">
-                                    <label for="resalePrice">Email</label>
-                                    <input class="inline" size="15" type="text" name="email@email.com" placeholder="resalePrice" v-model="user.email">
-                                </div>
-                            </div>
-                        </form>
+            <button class="btn-xs btn-info" @click="toggleUpdate">Update</button>
+            <button class="btn-xs btn-info" @click="toggleUpdateB">UpdatePassword</button>
+            <div v-if="updateA">
+                <form @submit.prevent="updateUser">
+                    <div class="form-group">
+                        <br>
+                        <div class="form-group">
+                            <button type="submit" class="btn-xs btn-success">Save</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input class="inline" size="15" type="text" name="name" placeholder="name" v-model="user.username">
+                        </div>
+                        <div class="form-group">
+                            <label for="resalePrice">Email</label>
+                            <input class="inline" size="15" type="text" name="email@email.com" placeholder="resalePrice" v-model="user.email">
+                        </div>
                     </div>
-                    <div v-if="updateB">
-                        <form @submit.prevent="updateUserPassword">
-                            <div class="form-group">
-                                <br>
-                                <div class="form-group">
-                                    <button type="submit" class="btn-xs btn-success">Save</button>
-                                </div>
-                                <div class="form-group">
-                                    <label for="name"> Old Password</label>
-                                    <input class="inline" size="15" type="password" name="password" placeholder="Password" v-model="user.OldPassword">
-                                </div>
-                                <div class="form-group">
-                                    <label for="name">New Password</label>
-                                    <input class="inline" size="15" type="password" name="password" placeholder="Password" v-model="user.NewPassword">
-                                </div>
+                </form>
+            </div>
+            <div v-if="updateB">
+                <form @submit.prevent="updateUserPassword">
+                    <div class="form-group">
+                        <br>
+                        <div class="form-group">
+                            <button type="submit" class="btn-xs btn-success">Save</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="name"> Old Password</label>
+                            <input class="inline" size="15" type="password" name="password" placeholder="Password" v-model="user.OldPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">New Password</label>
+                            <input class="inline" size="15" type="password" name="password" placeholder="Password" v-model="user.NewPassword">
+                        </div>
 
-                            </div>
-                        </form>
                     </div>
+                </form>
+            </div>
         </div>
 
 
@@ -132,17 +101,51 @@
                 </div>
             </form>
         </div>
-
+        <div class="buttonDiv">
+            <button@click="toggleVaultForm" class="btn btn-info">New Vault</button>
+        </div>
 
         <!-- <vault></vault> -->
         <h1>Vaults</h1>
-        <div v-for="vault in vaults">
-            <router-link :to="{name: 'Vault', params: { vaultId: vault.id, vault: vault }}">
-                <p>{{vault.name}}</p>
-            </router-link>
+        <div class="bgGrey">
+            <div v-for="vault in vaults">
+                <router-link :to="{name: 'Vault', params: { vaultId: vault.id, vault: vault }}">
+                    <p>{{vault.name}}</p>
+                </router-link>
+            </div>
         </div>
+        <div class="buttonDiv">
+            <button@click="toggleKeepForm" class="btn btn-info">New Keep</button>
+        </div>
+        <div v-if="keepForm" class="bgColor">
+            <form @submit.prevent="newKeep">
+                <div class="form-group">
 
-
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="imgurl">Img Url:</label>
+                        <div class="col-sm-3 regInput">
+                            <input type="url" size="40" name="imgurl" v-model="keep.imgUrl" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="description">Description:</label>
+                        <div class="col-sm-3 regInput">
+                            <input type="text" size="40" name="description" placeholder="Description" v-model="keep.description" />
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                            <label class="col-sm-2 control-label" for="url">Url:</label>
+                            <div class="col-sm-3 regInput">
+                                <input type="url" size="40" name="url" placeholder="url" v-model="keep.url" />
+                            </div>
+                        </div> -->
+                    <div class="form-group">
+                        <button type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <h1>My Keeps</h1>
         <div v-for="keep in keeps">
             <div class="col-xl-4 col-xs-6 mainDiv">
                 <!-- @click="setKeep(keep)" -->
@@ -159,6 +162,7 @@
                     <p>{{keep.views}}</p>
                     <p>{{keep.keeps}}</p>
                 </div>
+                <button class="btn-xs btn-danger" @click="deleteKeep(keep)">Delete</button>
             </div>
         </div>
 
@@ -225,6 +229,9 @@
             authenticate() {
                 this.$store.dispatch('authenticate')
             },
+            deleteKeep(keep) {
+                this.$store.dispatch('deleteKeep', keep)
+            }
         },
         computed: {
             user() {
@@ -251,10 +258,16 @@
     }
 </script>
 <style>
-    .brown {
+    .userChange {
         background-color: burlywood;
+        padding: 1rem
     }
-    .buttonDiv{
+
+    .buttonDiv {
         margin: 1rem;
+    }
+
+    .bgGrey {
+        background-color: cornsilk
     }
 </style>

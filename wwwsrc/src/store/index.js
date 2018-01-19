@@ -157,7 +157,8 @@ var store = new vuex.Store({
                 .then(res => {
                     console.log(res.data)
 
-                    dispatch('getAllKeeps')
+                dispatch('authenticate2')
+
 
                 })
                 .catch(err => {
@@ -199,7 +200,7 @@ var store = new vuex.Store({
                 .then(res => {
                     console.log("gjireojgeiojgioejj")
                     console.log(res.data)
-                    dispatch('getAllKeeps')
+                    dispatch('getMyKeeps', keep.userId)
 
 
                 })

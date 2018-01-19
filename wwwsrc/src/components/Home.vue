@@ -53,7 +53,7 @@
                                 </div>
                                 
                                 <div id="keepButtons" v-if="seen">
-                                        <button @click="addToVaultToggle">Keep</button>
+                                        <button @click="addToVaultToggle" class="btn-xs btn-info">Keep</button>
                                 </div>
                                 <div v-if="addToVaults">
                                         <form @change="addToVault(keep)">
