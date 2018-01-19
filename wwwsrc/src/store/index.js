@@ -274,7 +274,7 @@ var store = new vuex.Store({
                     console.log("authRes")
                     console.log(res)
                     if (!res.data) {
-                        router.push({ name: "Register" })
+                        // router.push({ name: "Register" })
                     } else {
                         commit('setUser', res.data)
                         dispatch('getUserVaults', res.data.id)

@@ -8,8 +8,10 @@ module.exports = {
   dev: {
 
     // Paths
-    assetsSubDirectory: '/../../wwwroot/static',
-    assetsPublicPath: '/../../wwwroot/',
+    assetsSubDirectory: 'static',
+    // /../../wwwroot/static
+    assetsPublicPath: '/',
+  // /../../wwwroot/
     proxyTable: {},
 
     // Various Dev Server settings
