@@ -37,6 +37,7 @@ var store = new vuex.Store({
     mutations: {
         setUser(state, data) {
             console.log("setting user")
+            console.log(data)
             state.user = data
         },
         setActiveKeeps(state, data) {
@@ -220,7 +221,7 @@ var store = new vuex.Store({
                 })
                 .catch(err => {
                     commit('handleError', err)
-                    router.push({ name: "Register" })
+                    // router.push({ name: "Register" })
                 })
         },
 
@@ -235,18 +236,22 @@ var store = new vuex.Store({
                 })
                 .catch(err => {
                     commit('handleError', err)
-                    router.push({ name: "Register" })
+                    // router.push({ name: "Register" })
                 })
         },
         userLogin({ commit, dispatch }, login) {
             auth.post('accounts/login', login)
                 .then(res => {
-
+                    if(res.data = ""){
+                        console.log("hi")
+                    }
+                    
                     console.log("user\/")
                     console.log(res.data)
                     commit('setUser', res.data)
                     router.push({ name: 'Home' })
                     dispatch('authenticate')
+
 
                 })
                 .catch(err => {
@@ -261,7 +266,7 @@ var store = new vuex.Store({
                     console.log(res)
 
                     commit('setUser', res.data)
-                    dispatch('authenticate')
+                    router.push({ name: 'Home' })
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -290,7 +295,7 @@ var store = new vuex.Store({
                     console.log("authRes")
                     console.log(res.data)
                     if (!res.data) {
-                        router.push({ name: "Register" })
+                        // router.push({ name: "Register" })
                     } else {
                         commit('setUser', res.data)
                         dispatch('getUserVaults', res.data.id)
@@ -305,7 +310,7 @@ var store = new vuex.Store({
             auth.delete('accounts/logout', user)
                 .then(res => {
                     console.log("yooooo2")
-                    router.push({ name: "Home" })
+                    router.push({ name: "Register" })
                 })
                 .catch(err => {
                     console.log(err)
