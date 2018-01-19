@@ -8,8 +8,8 @@ module.exports = {
   dev: {
 
     // Paths
-    assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsSubDirectory: '/../../wwwroot/static',
+    assetsPublicPath: '/../../wwwroot/',
     proxyTable: {},
 
     // Various Dev Server settings
@@ -38,7 +38,7 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
+    index: path.resolve(__dirname, '/../../wwwroot/index.html'),
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),

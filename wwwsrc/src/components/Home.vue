@@ -35,7 +35,8 @@
                     <div class="row">
                         <div v-for="keep in keeps">
                             <div class="col-xl-4 col-xs-6 mainDiv">
-                            <!-- @mouseover="keepButtonsShow(keep)" @mouseleave="keepButtonsHide(keep)" -->
+                            <!-- @mouseover="keepButtonsShow(keep)" @mouseleave="keepButtonsHide(keep)" --> 
+                            <!-- v-if toggles all instances of keep. need to find better solution. -->
                                 <!-- @click="setKeep(keep)" -->
                                 <div>
                                     <img class="keepImg" :src="keep.imgUrl" alt="keep image">
