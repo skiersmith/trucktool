@@ -34,8 +34,8 @@
                 <div class="keepCont">
                     <div class="row">
                         <div v-for="keep in keeps">
-                            <div class="col-xl-4 col-xs-6 mainDiv">
-                            <!-- @mouseover="keepButtonsShow(keep)" @mouseleave="keepButtonsHide(keep)" --> 
+                            <div class="col-xl-4 col-xs-6 mainDiv" @mouseover="seen = true" @mouseleave="seen = false" >
+                            
                             <!-- v-if toggles all instances of keep. need to find better solution. -->
                                 <!-- @click="setKeep(keep)" -->
                                 <div>
@@ -52,7 +52,7 @@
                                     <p>{{keep.keeps}}</p>
                                 </div>
                                 
-                                <div id="keepButtons" class="">
+                                <div id="keepButtons" v-if="seen">
                                         <button @click="addToVaultToggle">Keep</button>
                                 </div>
                                 <div v-if="addToVaults">
@@ -85,7 +85,7 @@
                 keep: {},
                 addToVaults: false,
                 vaultkeep: {},
-                // seen: false
+                seen: false
             }
         },
         methods: {
