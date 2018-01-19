@@ -8,10 +8,10 @@ module.exports = {
   dev: {
 
     // Paths
-    assetsSubDirectory: 'static',
-    // /../../wwwroot/static
-    assetsPublicPath: '/',
-  // /../../wwwroot/
+    assetsSubDirectory: '../../wwwroot/static',
+    // static
+    assetsPublicPath: '../../wwwroot/',
+    // /
     proxyTable: {},
 
     // Various Dev Server settings
@@ -22,7 +22,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
@@ -40,7 +40,7 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '/../../wwwroot/index.html'),
+    index: path.resolve(__dirname, '../../wwwroot/index.html'),
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
