@@ -71,101 +71,6 @@
                 </form>
             </div>
         </div>
-
-
-        <div v-if="vaultForm">
-            <form @submit.prevent="newVault">
-                <div class="form-group">
-
-                    <!-- <div class="form-group">
-                        <label class="col-sm-2 control-label" for="inputName">Name:</label>
-                        <div class="col-sm-3 regInput">
-                            <input type="text" size="40" id="inputName" placeholder="Name" v-model="keep.username" />
-                        </div>
-                    </div> -->
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="description">Name:</label>
-                        <div class="col-sm-3 regInput">
-                            <input type="text" size="40" name="name" placeholder="name" v-model="vault.name" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="url">Description:</label>
-                        <div class="col-sm-3 regInput">
-                            <input type="text" size="40" name="description" placeholder="description" v-model="vault.description" />
-                        </div>
-                    </div>
-                    <div>
-                        <button type="submit">Submit</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="buttonDiv">
-            <button@click="toggleVaultForm" class="btn btn-info">New Vault</button>
-        </div>
-
-        <!-- <vault></vault> -->
-        <h1>Vaults</h1>
-        <div class="bgGrey">
-            <div v-for="vault in vaults">
-                <router-link :to="{name: 'Vault', params: { vaultId: vault.id, vault: vault }}">
-                    <p>{{vault.name}}</p>
-                </router-link>
-            </div>
-        </div>
-        <div class="buttonDiv">
-            <button@click="toggleKeepForm" class="btn btn-info">New Keep</button>
-        </div>
-        <div v-if="keepForm" class="bgColor">
-            <form @submit.prevent="newKeep">
-                <div class="form-group">
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="imgurl">Img Url:</label>
-                        <div class="col-sm-3 regInput">
-                            <input type="url" size="40" name="imgurl" v-model="keep.imgUrl" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="description">Description:</label>
-                        <div class="col-sm-3 regInput">
-                            <input type="text" size="40" name="description" placeholder="Description" v-model="keep.description" />
-                        </div>
-                    </div>
-                    <!-- <div class="form-group">
-                            <label class="col-sm-2 control-label" for="url">Url:</label>
-                            <div class="col-sm-3 regInput">
-                                <input type="url" size="40" name="url" placeholder="url" v-model="keep.url" />
-                            </div>
-                        </div> -->
-                    <div class="form-group">
-                        <button type="submit">Submit</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <h1>My Keeps</h1>
-        <div v-for="keep in keeps">
-            <div class="col-xl-4 col-xs-6 mainDiv">
-                <!-- @click="setKeep(keep)" -->
-                <div>
-                    <img class="keepImg" :src="keep.imgUrl" alt="keep image">
-                </div>
-                <div>
-                    <!-- <p>{{keep.imgUrl}}</p> -->
-                    <p>
-                        {{keep.description}}
-                    </p>
-                </div>
-                <div class="keepStat-Container">
-                    <p>{{keep.views}}</p>
-                    <p>{{keep.keeps}}</p>
-                </div>
-                <button class="btn-xs btn-danger" @click="deleteKeep(keep)">Delete</button>
-            </div>
-        </div>
-
     </div>
 </template>
 <script>
@@ -175,7 +80,7 @@
         data() {
             return {
                 keep: {},
-                vault: {},
+                transaction: {},
                 updateA: false,
                 updateB: false,
                 vaultForm: false,
@@ -202,10 +107,10 @@
                 console.log("yooo" + this.user.password)
                 this.$store.dispatch('updateUserPassword', this.user)
             },
-            newVault() {
+            newTransaction() {
 
                 this.$store.dispatch('authenticate')
-                this.$store.dispatch('newVault', this.vault)
+                this.$store.dispatch('newTransaction', this.transaction)
             },
             toggleKeepForm() {
                 this.keepForm = !this.keepForm

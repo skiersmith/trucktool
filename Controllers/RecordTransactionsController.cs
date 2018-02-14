@@ -11,39 +11,39 @@ using Microsoft.AspNetCore.Mvc;
 namespace keepr.Controllers
 {
     [Route("api/[controller]")]
-    public class VaultKeepsController : Controller
+    public class RecordTransactionsController : Controller
     {
-        private readonly VaultKeepRepository db;
-        public VaultKeepsController(VaultKeepRepository vaultKeepRepo)
+        private readonly RecordTransactionRepository db;
+        public RecordTransactionsController(RecordTransactionRepository recordtransactionRepo)
         {
-            db = vaultKeepRepo;
+            db = recordtransactionRepo;
         }
 
         // GET ALL KEEPS IN A VAULT
         [HttpGet("{id}")]
-        public IEnumerable<Keep> GetByVault(int id)
+        public IEnumerable<Transaction> GetByVault(int id)
         {
             return db.GetAll(id);
         }
         // POST ADD KEEP TO VAULT
         [HttpPost]
-        public VaultKeep Post([FromBody]VaultKeep vk)
+        public RecordTransaction Post([FromBody]RecordTransaction rt)
         {
            
             var user = HttpContext.User;
             var id = Int32.Parse(user.Identity.Name);
-            vk.UserId = id;
+            rt.UserId = id;
             
 
-            return db.Add(vk);
+            return db.Add(rt);
         }
 
         // DELETE REMOVE KEEP FROM VAULT
         [Authorize]
-        [HttpDelete("vaults/{vaultId}/keeps/{id}")]
-        public String Delete(int vaultId, int id)
+        [HttpDelete("records/{recordId}/transactions/{id}")]
+        public String Delete(int recordId, int id)
         {
-            return db.FindByIdAndRemove(vaultId, id);
+            return db.FindByIdAndRemove(recordId, id);
         }
     }
 }

@@ -78,13 +78,28 @@
   }
 
   .mainDiv {
-    background-color: rgb(252, 243, 232);
+    /* background-color: rgb(252, 243, 232); */
     /* height: 20rem; */
-    width: 30rem;
+    width: 100vw;
     margin: 1rem;
     padding: 1rem;
     /* display: flex;
     align-content: space-around; */
+    border-radius: 3px;
+    border-bottom-style: solid;
+    /* height: 6rem; */
+  }
+  .mainDiv2 {
+    /* background-color: rgb(252, 243, 232); */
+    /* height: 20rem; */
+    width: 50vw;
+    margin: 1rem;
+    padding: 1rem;
+    /* display: flex;
+    align-content: space-around; */
+    border-radius: 3px;
+    border-bottom-style: solid;
+    /* height: 6rem; */
   }
 
   .mainDiv:hover {

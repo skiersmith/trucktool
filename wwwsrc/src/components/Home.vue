@@ -6,7 +6,7 @@
                     <div>
                         <div class="nav-header-sub">
                             <router-link class="RLwhite headDown3" :to="{name: 'Home'}">
-                                <h1>KEEPr</h1>
+                                <h1>TruckTool</h1>
                             </router-link>
                         </div>
                     </div>
@@ -28,21 +28,142 @@
             </div>
             <div class="spacer10"></div>
 
-         
-             
-        <h1 class="title">All Keeps:</h1>
-                <div class="keepCont">
-                    <div class="row">
-                        <div v-for="keep in keeps">
-                            <div class="col-xl-4 col-xs-6 mainDiv" @mouseover="seen = true" @mouseleave="seen = false" >
-                            
+            <h1 class="title">My Records</h1>
+            <div class="recordCont">
+                <div class="row">
+                    
+                    <div class="flex-container">
+                        <div>
+                            <b>Dot #</b>
+                        </div>
+                        <div>
+                            <b>Docket</b>
+                        </div>
+                        <div>
+                            <b>Entity Type: </b>
+                        </div>
+                        <div>
+                            <b>Last Modified Date: </b>
+                        </div>
+                        <div>
+                            <b>State</b>
+                        </div>
+                        <div>
+                            <b>Company Rep 1</b>
+                        </div>
+                        <div>
+                            <b>Email Address: </b>
+                        </div>
+                        <div>
+                            <b>150 Date: </b>
+                        </div>
+                        <div>
+                            <b>Phone Number: </b>
+                        </div>
+                    </div>
+                    <div v-for="record in records">
+                        <div class="col-xl-4 col-xs-6 mainDiv">
                             <!-- v-if toggles all instances of keep. need to find better solution. -->
-                                <!-- @click="setKeep(keep)" -->
+                            <!-- @click="setKeep(keep)" -->
+                            <div class="flex-container">
+                                <div class="">
+                                    <p>{{record.dot}}</p>
+                                </div>
+                                <!-- <div v-if="recordDetail"> -->
+                                <div class="">
+                                    <p>{{record.docket}}</p>
+                                </div>
+                                <div class="">
+                                    <p>{{record.entitY_TYPE}}</p>
+                                </div>
+                                <div class="">
+                                    <p>{{record.lasT_MODIFIED_DATE}}</p>
+
+                                </div>
+                                <div class="">
+                                    <p>{{record.censuS_MAILING_ADDRESS_STATE}}</p>
+
+                                </div>
+                                <div class="">
+                                    <p>{{record.companY_REP_1}}</p>
+
+                                </div>
+                                <div class="">
+                                    <p>{{record.emaiL_ADDRESS}}</p>
+
+                                </div>
+                                <div class="">
+                                    <p>{{record.mcS_150_DATE}}</p>
+                                </div>
                                 <div>
+
+                                    <p>{{record.censuS_CELL_PHONE_NUMBER}}</p>
+                                </div>
+                                
+                            </div>
+                            <!-- </div> -->
+                            
+                            
+                        </div>
+                                <div id="keepButtons">
+                                    <button @click="newTransactionToggle(record)" class="btn-xs btn-info">Transaction</button>
+                                </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="center-container">
+            <div class="transForm margin2 padding" v-if="newTransactionT">
+                <form id="transForm1" @submit.prevent="newTransaction">
+                    <div class="form-group fT-container">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="" for="description">Dot #:</label>
+                                <div class="regInput">
+                                    <input type="text" size="15" name="name" placeholder="dot #" v-model="transaction.Dot" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="" for="status">Status:</label>
+                                <div class="regInput">
+                                    <!-- <input type="text" size="40" name="status" placeholder="Status" v-model="transaction.Status" /> -->
+                                    <input type="radio" name="status" value="good" v-model="transaction.Status" checked> Good
+                                    <input type="radio" name="status" value="in progress" v-model="transaction.Status"> In progress
+                                    <input type="radio" name="status" value="bad" v-model="transaction.Status"> Bad
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="" for="inputName">Notes:</label>
+                            <div class="regInput">
+                                <textarea rows="4" cols="50" form="transForm1" v-model="transaction.Notes"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button @click="newTransactionToggle2" class="btn-sm" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="right-container">
+            <h1 class="title">Weekly Transactions</h1>
+        </div>
+        <div class="right-container">
+            <div class="transCont">
+                <div class="row">
+                    <div v-for="transaction in transactions">
+                        <div class="col-xl-4 col-xs-6 mainDiv2">
+
+                            <!-- v-if toggles all instances of keep. need to find better solution. -->
+                            <!-- @click="setKeep(keep)" -->
+                            <!-- <div>
                                     <img class="keepImg" :src="keep.imgUrl" alt="keep image">
                                 </div>
                                 <div>
-                                    <!-- <p>{{keep.imgUrl}}</p> -->
+                                    <p>{{keep.imgUrl}}</p>
                                     <p>
                                         {{keep.description}}
                                     </p>
@@ -50,28 +171,60 @@
                                 <div class="keepStat-Container">
                                     <p>{{keep.views}}</p>
                                     <p>{{keep.keeps}}</p>
-                                </div>
-                                
-                                <div id="keepButtons" v-if="seen">
-                                        <button @click="addToVaultToggle" class="btn-xs btn-info">Keep</button>
-                                </div>
-                                <div v-if="addToVaults">
-                                        <form @change="addToVault(keep)">
-                                            <p class="inline">Vault:</p>
-                                            <select name="select vault" v-model="vaultkeep.vaultId">
-                                                <option v-for="vault in vaults" :value="vault.id">{{vault.name}}</option>
-                                            </select>
-                                        </form>
-                                </div>
+                                </div> -->
 
+                            <div class="flex-container">
+
+                                <div>
+                                    <b>Dot #: </b>
+                                    <p>{{transaction.dot}}</p>
+                                </div>
+                                <div>
+                                    <b>Status</b>
+                                    <p>{{transaction.status}}</p>
+                                </div>
+                                <div>
+                                    <b>Notes: </b>
+                                    <p>{{transaction.notes}}</p>
+
+                                </div>
                             </div>
 
+
+                            <!-- <div id="keepButtons" v-if="seen">
+                                    <button @click="newTransactionToggle" class="btn-xs btn-info">Transaction</button>
+                                </div> -->
                         </div>
+
                     </div>
                 </div>
+            </div>
+            <!-- <vault></vault> -->
         </div>
-        <!-- <vault></vault> -->
 
+        <div class="margin2">
+            <form @submit="searchTransByDot">
+                <input size="15" type="text" v-model="searchTD">
+                <button class="btn-xs btn-info" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="flex-container">
+            <div v-for="t in tdsearch">
+                <div>
+                    <b>Dot #: </b>
+                    <p>{{t.dot}}</p>
+                </div>
+                <div>
+                    <b>Status</b>
+                    <p>{{t.status}}</p>
+                </div>
+                <div>
+                    <b>Notes: </b>
+                    <p>{{t.notes}}</p>
+
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -83,9 +236,15 @@
         data() {
             return {
                 keep: {},
-                addToVaults: false,
+                transaction: {},
+                newTransactionT: false,
+                // activeTransaction: "",
                 vaultkeep: {},
-                seen: false
+                seen: false,
+                recordDetail: false,
+                transactionDetail: false,
+                searchTD: ""
+
             }
         },
         methods: {
@@ -99,7 +258,7 @@
                 this.keepForm = !this.keepForm
             },
             newKeep() {
-                
+
                 this.authenticate()
                 // this.keep.userID = this.$store.state.user.id
                 this.$store.dispatch('newKeep', this.keep)
@@ -111,19 +270,46 @@
                 console.log(keep)
                 this.$store.dispatch('deleteKeep', keep)
             },
-            addToVault(keep){
+            addToVault(keep) {
                 console.log("keep")
                 console.log(keep.id)
                 console.log("Vault")
                 console.log(this.vaultkeep.vaultId)
-                this.vaultkeep.keepId = keep.id 
+                this.vaultkeep.keepId = keep.id
                 this.$store.dispatch('addToVault', this.vaultkeep)
                 this.vaultkeep.vaultId = ""
             },
-            addToVaultToggle(){
-                
-                this.addToVaults = !this.addToVaults
+            newTransactionToggle(record) {
+                console.log(record.dot)
+                this.transaction.dot = record.dot
+                console.log("here")
+                this.newTransactionT = true
             },
+            newTransactionToggle2(record) {
+                this.newTransactionT = false
+            },
+            newTransaction() {
+
+                this.$store.dispatch('authenticate')
+                this.$store.dispatch('newTransaction', this.transaction)
+            },
+            searchTransByDot() {
+                this.$store.dispatch('searchTransByDot', this.searchTD)
+            },
+            toggleRecordDetail() {
+                this.recordDetail = !this.recordDetail
+            },
+            toggleTransactionDetail() {
+                this.transactionDetail = !this.transactionDetail
+            },
+            // hideRecordDetail(index) {
+            //     this.recordDetail = false
+            //     this.record[index].addClass("hidden")
+            // },
+            // showRecordDetail(index) {
+            //     this.recordDetail = true
+            //     this.record[index].removeClass("hidden")
+            // }
             // keepButtonsShow(keep){
             //     // $(keep).find("keepButtons").removeClass("hidden")
             //     keep.getElementById("keepButtons").removeClass("hidden")
@@ -139,18 +325,26 @@
 
                 return this.$store.state.user
             },
-            keeps() {
-
-
-                return this.$store.state.activeKeeps
+            records() {
+                return this.$store.state.activeRecords
             },
-            vaults(){
+            transactions() {
+                return this.$store.state.activeTransactions
+            },
+            vaults() {
                 return this.$store.state.activeVaults
+            },
+            tdsearch() {
+                console.log(this.$store.state.activeSTD)
+                return this.$store.state.activeSTD
             }
         },
         mounted() {
-            this.$store.dispatch('getAllKeeps')
             this.$store.dispatch('authenticate')
+            console.log("what")
+            console.log(this.user)
+            this.$store.dispatch('getUserRecords', this.user.id)
+            this.$store.dispatch('getUserTransactions')
 
         }
     }
@@ -161,22 +355,81 @@
         top: -1rem;
     } */
 
+    .padding {
+        padding: 1rem;
+    }
+
+    .marginright {
+        margin-right: 2rem;
+    }
+
+    .transForm {
+        background-color: rgb(205, 215, 255);
+        width: 50vw;
+        border-radius: 20px;
+    }
+
+    .flex-container {
+        display: flex;
+        justify-content: space-around
+    }
+
+    .margin2 {
+        margin: 5rem;
+    }
+
     .white {
         color: white;
     }
 
-    .keepCont {
+    .recordCont {
         background-color: rgb(205, 215, 255);
-        width: 100vw
+        width: 100vw;
+        border-radius: 3px;
+        border-top-style: solid;
+    }
 
+    .transCont {
+        background-color: rgb(205, 215, 255);
+        width: 50vw;
+        border-radius: 3px;
+        border-top-style: solid;
+        border-left-style: solid;
     }
 
     .bgColor {
         background-color: blanchedalmond;
         width: 40rem;
     }
-    .title{
+
+    .title {
         position: relative;
-        right: 80rem;
+        /* right: 80rem; */
+        color: black;
+    }
+
+    .glyphicon-plus-sign:hover,
+    .glyphicon-minus-sign:hover {
+        color: gray;
+    }
+
+    .block {
+        display: block;
+    }
+
+    .center-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .right-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1rem
+    }
+
+    .fT-container {
+        display: flex;
+        justify-content: space-around;
     }
 </style>
