@@ -217,10 +217,10 @@ var store = new vuex.Store({
                 })
         },
         getUserRecords({ commit, dispatch }, userId) {
-            console.log("here")
-            console.log(userId)
+           
             api('userrecords/' + userId)
                 .then(res => {
+                    console.log("^^^^^")
                     console.log(res.data)
                     console.log("^^^^^")
                     commit('setActiveRecords', res.data)

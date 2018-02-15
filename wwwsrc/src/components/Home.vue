@@ -30,89 +30,43 @@
 
             <h1 class="title">My Records</h1>
             <div class="recordCont">
-                <div class="row">
-                    
-                    <div class="flex-container">
-                        <div>
-                            <b>Dot #</b>
-                        </div>
-                        <div>
-                            <b>Docket</b>
-                        </div>
-                        <div>
-                            <b>Entity Type: </b>
-                        </div>
-                        <div>
-                            <b>Last Modified Date: </b>
-                        </div>
-                        <div>
-                            <b>State</b>
-                        </div>
-                        <div>
-                            <b>Company Rep 1</b>
-                        </div>
-                        <div>
-                            <b>Email Address: </b>
-                        </div>
-                        <div>
-                            <b>150 Date: </b>
-                        </div>
-                        <div>
-                            <b>Phone Number: </b>
-                        </div>
-                    </div>
-                    <div v-for="record in records">
-                        <div class="col-xl-4 col-xs-6 mainDiv">
-                            <!-- v-if toggles all instances of keep. need to find better solution. -->
-                            <!-- @click="setKeep(keep)" -->
-                            <div class="flex-container">
-                                <div class="">
-                                    <p>{{record.dot}}</p>
-                                </div>
-                                <!-- <div v-if="recordDetail"> -->
-                                <div class="">
-                                    <p>{{record.docket}}</p>
-                                </div>
-                                <div class="">
-                                    <p>{{record.entitY_TYPE}}</p>
-                                </div>
-                                <div class="">
-                                    <p>{{record.lasT_MODIFIED_DATE}}</p>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Dot #</th>
+                            <th scope="col">Company Name</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">Email Address</th>
+                            <th scope="col">Company Rep</th>
+                            <th scope="col">Company Rep 2</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Docket</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="record in records">
+                            <th scope="row">{{record.dot}}</th>
+                            <td>{{record.census_DBA}}</td>
+                            <td>{{record.censuS_CELL_PHONE_NUMBER}}</td>
+                            <td>{{record.email}}</td>
+                            <td>{{record.companY_REP_1}}</td>
+                            <td>{{record.companY_REP_2}}</td>
+                            <td>{{record.censuS_MAILING_ADDRESS_STATE}}</td>
+                            <td>{{record.docket}}</td>
+                        </tr>
 
-                                </div>
-                                <div class="">
-                                    <p>{{record.censuS_MAILING_ADDRESS_STATE}}</p>
+                    </tbody>
+                </table>
 
-                                </div>
-                                <div class="">
-                                    <p>{{record.companY_REP_1}}</p>
 
-                                </div>
-                                <div class="">
-                                    <p>{{record.emaiL_ADDRESS}}</p>
-
-                                </div>
-                                <div class="">
-                                    <p>{{record.mcS_150_DATE}}</p>
-                                </div>
-                                <div>
-
-                                    <p>{{record.censuS_CELL_PHONE_NUMBER}}</p>
-                                </div>
-                                
-                            </div>
-                            <!-- </div> -->
-                            
-                            
-                        </div>
-                                <div id="keepButtons">
+                <!-- <div id="keepButtons">
                                     <button @click="newTransactionToggle(record)" class="btn-xs btn-info">Transaction</button>
-                                </div>
-                    </div>
-
-                </div>
+                             </div> -->
             </div>
+
         </div>
+
+
 
         <div class="center-container">
             <div class="transForm margin2 padding" v-if="newTransactionT">
@@ -326,7 +280,16 @@
                 return this.$store.state.user
             },
             records() {
-                return this.$store.state.activeRecords
+                debugger
+                var var1 = this.$store.state.activeRecords
+                for (let i = 0; i < var1.length; i++) {
+                    const element = var1[i];
+
+                    if (element.docket == null || element.docket == "") {
+                        element.docket = "--------"
+                    }
+                }
+                return var1
             },
             transactions() {
                 return this.$store.state.activeTransactions
