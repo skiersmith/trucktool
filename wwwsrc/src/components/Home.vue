@@ -1,107 +1,192 @@
 <template>
     <div>
-        <div>
-            <div class="nav-header">
-                <div class="nav-header-container">
-                    <div>
-                        <div class="nav-header-sub">
-                            <router-link class="RLwhite headDown3" :to="{name: 'Home'}">
-                                <h1>TruckTool</h1>
-                            </router-link>
-                        </div>
-                    </div>
-
-                    <div>
-                        <p>Welcome, {{user.username}}</p>
-                        <router-link class="RLwhite headDown3" :to="{name: 'Account'}">
-                            <p>My Account</p>
+        <div class="nav-header">
+            <div class="nav-header-container">
+                <div>
+                    <div class="nav-header-sub">
+                        <router-link class="RLwhite headDown3" :to="{name: 'Home'}">
+                            <h1>TruckTool</h1>
                         </router-link>
                     </div>
-                    <div>
-                        <div class="nav-header-sub">
-                            <span @click="userLogout">
-                                <p class="white">Logout</p>
-                            </span>
-                        </div>
+                </div>
+
+                <div>
+                    <p>Welcome, {{user.username}}</p>
+                    <router-link class="RLwhite headDown3" :to="{name: 'Account'}">
+                        <p>My Account</p>
+                    </router-link>
+                    <router-link class="RLwhite headDown3" :to="{name: 'Good'}">
+                        <p>HOT LEADS</p>
+                    </router-link>
+                </div>
+                <div>
+                    <div class="nav-header-sub">
+                        <span @click="userLogout">
+                            <p class="white">Logout</p>
+                        </span>
                     </div>
                 </div>
             </div>
-            <div class="spacer10"></div>
-
-            <h1 class="title">My Records</h1>
-            <div class="recordCont">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Dot #</th>
-                            <th scope="col">Company Name</th>
-                            <th scope="col">Phone Number</th>
-                            <th scope="col">Email Address</th>
-                            <th scope="col">Company Rep</th>
-                            <th scope="col">Company Rep 2</th>
-                            <th scope="col">State</th>
-                            <th scope="col">Docket</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="record in records">
-                            <th scope="row">{{record.dot}}</th>
-                            <td>{{record.census_DBA}}</td>
-                            <td>{{record.censuS_CELL_PHONE_NUMBER}}</td>
-                            <td>{{record.email}}</td>
-                            <td>{{record.companY_REP_1}}</td>
-                            <td>{{record.companY_REP_2}}</td>
-                            <td>{{record.censuS_MAILING_ADDRESS_STATE}}</td>
-                            <td>{{record.docket}}</td>
-                        </tr>
-
-                    </tbody>
-                </table>
+        </div>
+        <div class="spacer10"></div>
+        <div>
+            <div class="row margin2">
 
 
-                <!-- <div id="keepButtons">
-                                    <button @click="newTransactionToggle(record)" class="btn-xs btn-info">Transaction</button>
-                             </div> -->
+
+
+
+
+                <h1 class="title">My Records</h1>
+                <button @click="tableTimeToggle">TableTimeToggle</button>
+                <h1>{{tableTimeZone1}}</h1>
+
+                <div class="col-lg-8 recordCont">
+                    <table v-if="tableTimeZone == 3" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Dot #</th>
+                                <th scope="col">Company Name</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Email Address</th>
+                                <th scope="col">Company Rep</th>
+                                <th scope="col">Company Rep 2</th>
+                                <th scope="col">State</th>
+                                <th scope="col">Docket</th>
+                                <th scope="col">------</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="record in records">
+                                <th scope="row">{{record.dot}}</th>
+                                <td>{{record.census_DBA}}</td>
+                                <td>{{record.censuS_CELL_PHONE_NUMBER}}</td>
+                                <td>{{record.email}}</td>
+                                <td>{{record.companY_REP_1}}</td>
+                                <td>{{record.companY_REP_2}}</td>
+                                <td>{{record.censuS_MAILING_ADDRESS_STATE}}</td>
+                                <td>{{record.docket}}</td>
+                                <td><button class="btn-xs"  @click="copyDot(record.dot)">Copy</button></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <table v-if="tableTimeZone == 2" class="table table-bordered table-striped">
+
+                        <thead>
+                            <tr>
+                                <th scope="col">Dot #</th>
+                                <th scope="col">Company Name</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Email Address</th>
+                                <th scope="col">Company Rep</th>
+                                <th scope="col">Company Rep 2</th>
+                                <th scope="col">State</th>
+                                <th scope="col">Docket</th>
+                                <th scope="col">------</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="record in records">
+                                <th scope="row">{{record.dot}}</th>
+                                <td>{{record.census_DBA}}</td>
+                                <td>{{record.censuS_CELL_PHONE_NUMBER}}</td>
+                                <td>{{record.email}}</td>
+                                <td>{{record.companY_REP_1}}</td>
+                                <td>{{record.companY_REP_2}}</td>
+                                <td>{{record.censuS_MAILING_ADDRESS_STATE}}</td>
+                                <td>{{record.docket}}</td>
+                                <td><button class="btn-xs"  @click="copyDot(record.dot)">Copy</button></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <table v-if="tableTimeZone == 1" class="table table-bordered table-striped">
+
+                        <thead>
+                            <tr>
+                                <th scope="col">Dot #</th>
+                                <th scope="col">Company Name</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Email Address</th>
+                                <th scope="col">Company Rep</th>
+                                <th scope="col">Company Rep 2</th>
+                                <th scope="col">State</th>
+                                <th scope="col">Docket</th>
+                                <th scope="col">------</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="record in records">
+                                <th scope="row">{{record.dot}}</th>
+                                <td>{{record.census_DBA}}</td>
+                                <td>{{record.censuS_CELL_PHONE_NUMBER}}</td>
+                                <td>{{record.email}}</td>
+                                <td>{{record.companY_REP_1}}</td>
+                                <td>{{record.companY_REP_2}}</td>
+                                <td>{{record.censuS_MAILING_ADDRESS_STATE}}</td>
+                                <td>{{record.docket}}</td>
+                                <td><button class="btn-xs"  @click="copyDot(record.dot)">Copy</button></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+
+
+
+                <div class="col-lg-4 center-container">
+                    <div class="transForm padding" v-if="newTransactionT">
+                        <form id="transForm1" @submit.prevent="newTransaction">
+                            <div class="form-group fT-container">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label class="" for="description">Dot #:</label>
+                                        <div class="regInput">
+                                            <input type="text" size="15" name="name" placeholder="dot #" v-model="transaction.Dot" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="" for="status">Status:</label>
+                                        <div class="regInput">
+                                            <!-- <input type="text" size="40" name="status" placeholder="Status" v-model="transaction.Status" /> -->
+                                            <input type="radio" name="status" value="good" v-model="transaction.Status" checked> Good
+                                            <input type="radio" name="status" value="in progress" v-model="transaction.Status"> In progress
+                                            <input type="radio" name="status" value="bad" v-model="transaction.Status"> Bad
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="" for="inputName">Notes:</label>
+                                    <div class="regInput">
+                                        <textarea rows="4" cols="50" form="transForm1" v-model="transaction.Notes"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button @click="newTransactionToggle2" class="btn-sm" type="submit">Submit</button>
+                            </div>
+                        </form>
+                        <div class="topMargin">
+                            <form @submit="searchTransByDot">
+                                <input size="15" type="text" v-model="searchTD">
+                                <button class="btn-xs btn-info" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
             </div>
 
         </div>
 
 
-
-        <div class="center-container">
-            <div class="transForm margin2 padding" v-if="newTransactionT">
-                <form id="transForm1" @submit.prevent="newTransaction">
-                    <div class="form-group fT-container">
-                        <div class="form-group">
-                            <div class="form-group">
-                                <label class="" for="description">Dot #:</label>
-                                <div class="regInput">
-                                    <input type="text" size="15" name="name" placeholder="dot #" v-model="transaction.Dot" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="" for="status">Status:</label>
-                                <div class="regInput">
-                                    <!-- <input type="text" size="40" name="status" placeholder="Status" v-model="transaction.Status" /> -->
-                                    <input type="radio" name="status" value="good" v-model="transaction.Status" checked> Good
-                                    <input type="radio" name="status" value="in progress" v-model="transaction.Status"> In progress
-                                    <input type="radio" name="status" value="bad" v-model="transaction.Status"> Bad
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="" for="inputName">Notes:</label>
-                            <div class="regInput">
-                                <textarea rows="4" cols="50" form="transForm1" v-model="transaction.Notes"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <button @click="newTransactionToggle2" class="btn-sm" type="submit">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
         <div class="right-container">
             <h1 class="title">Weekly Transactions</h1>
         </div>
@@ -156,12 +241,7 @@
             <!-- <vault></vault> -->
         </div>
 
-        <div class="margin2">
-            <form @submit="searchTransByDot">
-                <input size="15" type="text" v-model="searchTD">
-                <button class="btn-xs btn-info" type="submit">Search</button>
-            </form>
-        </div>
+
         <div class="flex-container">
             <div v-for="t in tdsearch">
                 <div>
@@ -190,18 +270,35 @@
         data() {
             return {
                 keep: {},
-                transaction: {},
-                newTransactionT: false,
+                transaction: {
+                    Dot: ""
+                },
+                newTransactionT: true,
                 // activeTransaction: "",
                 vaultkeep: {},
                 seen: false,
                 recordDetail: false,
                 transactionDetail: false,
-                searchTD: ""
+                searchTD: "",
+                tableTimeZone: 1
 
             }
         },
         methods: {
+            copyDot(dot){
+                this.transaction.Dot = dot
+                console.log(this.transaction.Dot)
+                return
+            },
+            tableTimeToggle() {
+                if (this.tableTimeZone < 3) {
+                    this.tableTimeZone++
+                }
+                else {
+                    this.tableTimeZone = 1
+                }
+
+            },
             userLogout() {
                 this.$store.dispatch('logout', this.$store.state.user._id)
             },
@@ -275,6 +372,9 @@
 
         },
         computed: {
+            tableTimeZone1() {
+                return this.tableTimeZone
+            },
             user() {
 
                 return this.$store.state.user
@@ -347,7 +447,7 @@
 
     .recordCont {
         background-color: rgb(205, 215, 255);
-        width: 100vw;
+        /* width: 80vw; */
         border-radius: 3px;
         border-top-style: solid;
     }
@@ -383,6 +483,9 @@
     .center-container {
         display: flex;
         justify-content: center;
+        top: 120px;
+        position: sticky;
+
     }
 
     .right-container {
@@ -394,5 +497,8 @@
     .fT-container {
         display: flex;
         justify-content: space-around;
+    }
+    .topMargin{
+        margin-top: 4rem;
     }
 </style>

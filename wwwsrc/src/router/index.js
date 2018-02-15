@@ -5,6 +5,8 @@ import Home from '../components/Home'
 import Account from '../components/Account'
 import Keep from '../components/Keep'
 import Vault from '../components/Vault'
+import Good from '../components/Good'
+
 Vue.use(Router)
 
 export default new Router({
@@ -34,6 +36,11 @@ export default new Router({
       name: 'Vault',
       component: Vault,
       props: true
+    },
+    {
+      path: '/good',
+      name: 'Good',
+      component: Good,
     },
     
   ]

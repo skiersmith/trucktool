@@ -43,6 +43,7 @@
     top: 0px;
     position: fixed;
     left: 0px;
+    z-index: 2;
     /* display: flex; */
     /* justify-content: space-around; */
   }
