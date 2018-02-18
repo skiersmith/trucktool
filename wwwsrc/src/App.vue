@@ -93,14 +93,15 @@
   .mainDiv2 {
     /* background-color: rgb(252, 243, 232); */
     /* height: 20rem; */
-    width: 50vw;
-    margin: 1rem;
-    padding: 1rem;
+    /* width: 50vw; */
+    /* margin: 1rem; */
+    /* padding: 1rem; */
     /* display: flex;
     align-content: space-around; */
-    border-radius: 3px;
-    border-bottom-style: solid;
+    /* border-radius: 3px; */
+    /* border-bottom-style: solid; */
     /* height: 6rem; */
+    color: black;
   }
 
   .mainDiv:hover {

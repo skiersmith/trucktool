@@ -25,12 +25,14 @@ var store = new vuex.Store({
         user: {},
         activeRecords: {
             record: {
-                    Dot: "9985564"
-                    
-                }
+                Dot: "9985564"
+
+            }
         },
         activeVaults: {},
-        activeTransactions: {},
+        activeYTransactions: {},
+        activeOTransactions: {},
+        activeGTransactions: {},
         myKeeps: {
             // keep: {
             //     decsription: "jig0rajij",
@@ -42,21 +44,27 @@ var store = new vuex.Store({
     },
     mutations: {
         setUser(state, data) {
-            console.log("setting user")
-            console.log(data)
+
             state.user = data
         },
         setActiveRecords(state, data) {
             state.activeRecords = data
         },
-        setActiveTransactions(state, data) {
+        setActiveOTransactions(state, data) {
+            console.log("heere")
 
-            state.activeTransactions = data
+            state.activeOTransactions = data
+        },
+        setActiveYTransactions(state, data) {
+            state.activeYTransactions = data
+        },
+        setActiveGTransactions(state, data) {
+            state.activeGTransactions = data
+            console.log("heere")
+
         },
         setMyKeeps(state, data) {
-            console.log("here")
-            console.log(data)
-            console.log("here")
+
             state.myKeeps = data
 
         },
@@ -66,13 +74,11 @@ var store = new vuex.Store({
         },
 
         setActiveVaults(state, data) {
-            console.log("AV")
-            console.log(data)
+
             state.activeVaults = data
 
         },
         setVaultKeep(state, data) {
-            console.log("hi")
             state.activeVaultKeep = data
 
         },
@@ -80,19 +86,62 @@ var store = new vuex.Store({
             state.activeSTD = data
 
         },
+        clearSTD(state, data) {
+            state.activeYTransactions = data
+            state.activeOTransactions = data
+        }
 
     },
     actions: {
         searchTransByDot({ commit, dispatch }, dot) {
-            console.log(dot)
             api('transactions/' + dot)
                 .then(res => {
-                    console.log("res")
+                   console.log(res.data)
+                    if(res.data != []){
+                        // res.data = [res.data]
+                        console.log("this is why I'm broken")
+                    }
                     console.log(res.data)
+                    debugger
+                    var yellow = []
+                    var orange = []
+                    var green = []
+                    for (let i = 0; i < res.data.length; i++) {
+                        console.log("hers")
+                        var element = res.data[i];
+                        if (element.status == "yellow") {
+                            yellow.push(element)
+                            console.log("hers")
+                            continue
+                        }
+                        else if (element.status == "orange") {
+                            orange.push(element)
+                            console.log("hers")
+                            continue
+                        }
+                        else if (element.status == "green") {
+                            // commit('setOTransaction')
+                            green.push(element)
+                        }
+                        else { }
+                    }
+                    var data1 = {}
+                    commit('clearSTD', data1)
+                    commit('setActiveYTransactions', yellow)
+                    commit('setActiveOTransactions', orange)
+                    commit('setActiveGTransactions', green)
 
-                    commit('setActiveSTD', res.data.userId)
-
+                    // else{
+                    //     var data1 = [res.data]
+                    //     if (res.data.status == "yellow") {
+                    //         commit('setActiveYTransactions', data1)
+                    //     }
+                    //     else if (res.data.status == "orange") {
+                    //         commit('setActiveOTransactions', data1)
+                    //     }
+                    // }
                 })
+
                 .catch(err => {
                     commit('handleError', err)
 
@@ -103,8 +152,7 @@ var store = new vuex.Store({
 
             api.delete('vaultkeeps/' + 'vaults/' + keep.vaultId + '/keeps/' + keep.id, )
                 .then(res => {
-                    console.log("res")
-                    console.log(res.data)
+
 
                     dispatch('getUserVaults', res.data.userId)
 
@@ -122,8 +170,7 @@ var store = new vuex.Store({
             }
             api.post('vaultkeeps', v)
                 .then(res => {
-                    console.log("res")
-                    console.log(res.data)
+
 
                     dispatch('getUserVaults', res.data.userId)
 
@@ -136,10 +183,8 @@ var store = new vuex.Store({
         newTransaction({ commit, dispatch }, transaction) {
             api.post('transactions', transaction)
                 .then(res => {
-                    console.log(res.data)
                     dispatch('newRecordTransaction', res.data)
-                    dispatch('getUserTransactions', res.data.userId)
-
+                    dispatch('searchTransByDot', res.data.dot)
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -149,9 +194,28 @@ var store = new vuex.Store({
         newRecordTransaction({ commit, dispatch }, transaction) {
             api.post('recordtransactions', transaction)
                 .then(res => {
-                    console.log(res.data)
-                    dispatch('newRecordTransaction', res.data.userId)
+                    debugger
+                    if(res.status == "red"){
+                        dispatch('getRecord', transaction)
+                    }
+                    // dispatch('newRecordTransaction', res.data.userId)
+                    
+                })
+                .catch(err => {
+                    commit('handleError', err)
 
+                })
+        },
+        // must get record id before userrecord can be deleted
+        getRecord({ commit, dispatch }, transaction) {
+            api('records', transaction)
+                .then(res => {
+                    debugger
+                    if(res.status == "red"){
+                        dispatch('deleteUserRecord', transaction)
+                    }
+                    // dispatch('newRecordTransaction', res.data.userId)
+                    
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -161,9 +225,7 @@ var store = new vuex.Store({
         getUserVaults({ commit, dispatch }, userId) {
             api('vaults/users/' + userId)
                 .then(res => {
-                    console.log("^><^><")
-                    console.log(res.data)
-                    console.log("^><^><")
+
                     commit('setActiveVaults', res.data)
 
 
@@ -176,7 +238,7 @@ var store = new vuex.Store({
         getKeepsAtVault({ commit, dispatch }, VaultId) {
             api('vaultkeeps/' + VaultId)
                 .then(res => {
-                    console.log(res.data)
+
                     commit('setVaultKeep', res.data)
 
 
@@ -192,7 +254,7 @@ var store = new vuex.Store({
         newKeep({ commit, dispatch }, keep) {
             api.post('keeps', keep)
                 .then(res => {
-                    console.log(res.data)
+
 
                     dispatch('authenticate2')
 
@@ -206,7 +268,7 @@ var store = new vuex.Store({
         getAllKeeps({ commit, dispatch }, keep) {
             api('keeps')
                 .then(res => {
-                    console.log(res.data)
+
                     commit('setActiveKeeps', res.data)
 
 
@@ -217,12 +279,10 @@ var store = new vuex.Store({
                 })
         },
         getUserRecords({ commit, dispatch }, userId) {
-           
+
             api('userrecords/' + userId)
                 .then(res => {
-                    console.log("^^^^^")
-                    console.log(res.data)
-                    console.log("^^^^^")
+
                     commit('setActiveRecords', res.data)
                 })
                 .catch(err => {
@@ -230,13 +290,46 @@ var store = new vuex.Store({
 
                 })
         },
+        deleteUserRecord({ commit, dispatch }, payload) {
+            
+            api.delete('userrecords/users/' + payload.userId + '/records/' + payload.recordId)
+                .then(res => {
+
+                    dispatch('getUserRecords', res.data)
+                })
+                .catch(err => {
+                    commit('handleError', err)
+
+                })
+        },
         getUserTransactions({ commit, dispatch }, userId) {
-            // console.log(userId)
+
             api('transactions/users/' + userId)
                 .then(res => {
-                    console.log("log")
-                    console.log(res.data)
-                    commit('setActiveTransactions', res.data)
+                    var yellow = []
+                    var orange = []
+                    var green = []
+                    debugger
+                    for (let i = 0; i < res.data.length; i++) {
+
+                        var element = res.data[i];
+                        if (element.status == "yellow") {
+                            yellow.push(element)
+                            continue
+                        }
+                        else if (element.status == "orange") {
+                            orange.push(element)
+                            continue
+                        }
+                        else if (element.status == "green") {
+                            // commit('setOTransaction')
+                            green.push(element)
+                        }
+                        else { }
+                    }
+                    commit('setActiveYTransactions', yellow)
+                    commit('setActiveOTransactions', orange)
+                    commit('setActiveGTransactions', green)
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -247,8 +340,7 @@ var store = new vuex.Store({
         deleteKeep({ commit, dispatch }, keep) {
             api.delete('keeps/' + keep.id)
                 .then(res => {
-                    console.log("gjireojgeiojgioejj")
-                    console.log(res.data)
+
                     dispatch('getMyKeeps', keep.userId)
 
 
@@ -263,7 +355,7 @@ var store = new vuex.Store({
         updateUser({ commit, dispatch }, user) {
             auth.put('accounts', user)
                 .then(res => {
-                    console.log(res.data)
+
                     commit('setUser', res.data)
                     // router.push({ name: 'Home' })
                     dispatch('authenticate')
@@ -278,7 +370,7 @@ var store = new vuex.Store({
         updateUserPassword({ commit, dispatch }, user) {
             auth.put('accounts/change-password', user)
                 .then(res => {
-                    console.log(res.data)
+
                     commit('setUser', res.data)
                     // router.push({ name: 'Home' })
                     dispatch('authenticate')
@@ -293,11 +385,9 @@ var store = new vuex.Store({
             auth.post('accounts/login', login)
                 .then(res => {
                     if (res.data = "") {
-                        console.log("hi")
                     }
 
-                    console.log("user\/")
-                    console.log(res.data)
+
                     commit('setUser', res.data)
                     router.push({ name: 'Home' })
                     dispatch('authenticate')
@@ -312,8 +402,7 @@ var store = new vuex.Store({
         userRegister({ commit, dispatch }, register) {
             auth.post('accounts/register', register)
                 .then(res => {
-                    console.log(register)
-                    console.log(res)
+
 
                     commit('setUser', res.data)
                     router.push({ name: 'Home' })
@@ -326,8 +415,7 @@ var store = new vuex.Store({
         authenticate({ commit, dispatch }) {
             auth('accounts/authenticate')
                 .then(res => {
-                    console.log("authRes")
-                    console.log(res)
+
                     if (!res.data) {
                         // router.push({ name: "Register" })
                     } else {
@@ -342,8 +430,7 @@ var store = new vuex.Store({
         authenticate2({ commit, dispatch }) {
             auth('accounts/authenticate')
                 .then(res => {
-                    console.log("authRes")
-                    console.log(res.data)
+
                     if (!res.data) {
                         // router.push({ name: "Register" })
                     } else {
@@ -359,7 +446,7 @@ var store = new vuex.Store({
         logout({ commit, dispatch }, user) {
             auth.delete('accounts/logout', user)
                 .then(res => {
-                    console.log("yooooo2")
+
                     router.push({ name: "Register" })
                 })
                 .catch(err => {

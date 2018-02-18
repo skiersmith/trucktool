@@ -43,7 +43,7 @@ namespace keepr.Controllers
 
         // GET api/values/5
         [HttpGet("{dot}")]
-        public Transaction Get(int dot)
+        public IEnumerable<Transaction> Get(int dot)
         {
             return db.GetByDot(dot);
         }

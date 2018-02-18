@@ -27,10 +27,10 @@ namespace keepr.Repositories
             return _db.Query<Transaction>($"SELECT * FROM transactions WHERE userid = {id}");
         }
 
-        public Transaction GetByDot(int dot)
+        public IEnumerable<Transaction> GetByDot(int dot)
         {
             Console.WriteLine("THIS IS THE GET REQUEST #: ", dot);
-            return _db.QueryFirstOrDefault<Transaction>($"SELECT * FROM transactions WHERE Dot = {dot}", dot);
+            return _db.Query<Transaction>($"SELECT * FROM transactions WHERE Dot = {dot}", dot);
         }
 
         public Transaction Add(Transaction transaction)
