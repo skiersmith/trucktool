@@ -1,18 +1,15 @@
 <template>
     <div>
-        <!-- make searchbar to get record info for a dot number or date -->
-        <h1>"Good"</h1>
+
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th scope="col">Dot (click to expand)</th>
                     <th scope="col">Notes</th>
-
-
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="t in transactions">
+                <tr v-for="t in gTransactions">
                     <th scope="row">{{t.dot}}</th>
                     <td>{{t.notes}}</td>
                 </tr>
@@ -62,7 +59,13 @@
             user() {
                 return this.$store.state.user
             },
-            transactions() {
+            gTransactions() {
+                return this.$store.state.activeGTransactions
+            },
+            oTransactions() {
+                return this.$store.state.activeGTransactions
+            },
+            yTransactions() {
                 return this.$store.state.activeGTransactions
             },
 
